@@ -75,7 +75,7 @@
     "file": "BAACAgIAAyEFAASPM6OaAANFaJNuteADNgMCZSDYjgtJV0phlVUAAld7AAL6c5hIuRuCfGSZXXU2BA",
     "caption": "🎙 Подкаст: «Когда удовольствие опасно?»\n\nУзнай, что таит в себе тяга к «прекрасному»\n\nОдин из самых честных разговоров.",
     "buttons": [
-      [{ "text": "Слушаю", "callback_data": "step9" }, { "text": "Продолжить", "callback_data": "step9" }]
+      [{ "text": "Еще", "callback_data": "step9" }, { "text": "Продолжить", "callback_data": "step9" }]
     ]
   },
   {
