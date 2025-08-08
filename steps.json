@@ -87,7 +87,7 @@
   },
   {
     "type": "video",
-    "file": "BAACAgIAAyEFAASPM6OaAANHaJWyecm49FOc-FnPERROLrrlc5UAAhiGAAJH76lIjCWnGmfRgOI2BA",
+    "file": "sgdgd",
     "caption": "✨ Закрытое видео — внутренняя трансформация\n\nСмотри его один. Метод Евгения Гурьянова.",
     "buttons": [
       [{ "text": "Финал", "callback_data": "next" }, { "text": "Спасибо", "callback_data": "next" }]
