@@ -32,23 +32,35 @@ function saveUserData() {
 let sheetsApi;
 
 async function initSheets() {
-  if (!SERVICE_EMAIL || !PRIVATE_KEY) {
-    throw new Error('GOOGLE_SERVICE_ACCOUNT_EMAIL / GOOGLE_PRIVATE_KEY отсутствуют в .env');
+  const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
+
+  let authClient;
+
+  // 1) Если есть приватный ключ в переменной — используем его
+  if (SERVICE_EMAIL && PRIVATE_KEY) {
+    const auth = new google.auth.JWT(SERVICE_EMAIL, null, PRIVATE_KEY, scopes);
+    await auth.authorize();
+    authClient = auth;
   }
-  const auth = new google.auth.JWT(
-    SERVICE_EMAIL,
-    null,
-    PRIVATE_KEY,
-    ['https://www.googleapis.com/auth/spreadsheets']
-  );
-  await auth.authorize();
-  sheetsApi = google.sheets({ version: 'v4', auth });
+  // 2) Иначе, если передан путь к json-файлу — используем его
+  else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    const auth = new google.auth.GoogleAuth({
+      keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+      scopes
+    });
+    authClient = await auth.getClient();
+  }
+  else {
+    throw new Error('Нет ни GOOGLE_PRIVATE_KEY, ни GOOGLE_APPLICATION_CREDENTIALS');
+  }
+
+  sheetsApi = google.sheets({ version: 'v4', auth: authClient });
 
   await ensureSheetWithHeader('Users',  ['ts','user_id','username','first_name','last_name','ref']);
   await ensureSheetWithHeader('Steps',  ['ts','user_id','step_index','step_type']);
   await ensureSheetWithHeader('Events', ['ts','user_id','type','data']);
+
   console.log('✅ Google Sheets готова');
-}
 
 async function ensureSheetWithHeader(title, header) {
   // Проверяем есть ли шапка; если листа нет — попробуем добавить.
