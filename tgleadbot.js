@@ -95,8 +95,24 @@ async function appendRow(title, values) {
   });
 }
 
+const TIME_ZONE = 'Africa/Cairo'
+
 // ======== ANALYTICS HELPERS ========
-const nowISO = () => new Date().toISOString();
+const nowISO = () => {
+  const d = new Date();
+  const fmt = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+  const parts = Object.fromEntries(fmt.formatToParts(d).map(({ type, value }) => [type, value]));
+  return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}:${parts.second}`;
+};
 
 async function logStart(msg, ref) {
   const u = msg.from || {};
