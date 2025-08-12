@@ -1,3 +1,5 @@
 .env
 userData.json
-node_modules/
+node_modules/.env
+*.json
+aio-telegram-bot-*.json
