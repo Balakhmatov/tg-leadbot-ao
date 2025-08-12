@@ -247,6 +247,7 @@ bot.on('channel_post', async (msg) => {
   try {
     await initSheets();
   } catch (e) {
-    console.error('❌ Sheets init error:', e.message);
+    console.error('❌ Sheets init error (бот продолжит без аналитики):', e.message);
+    sheetsApi = null; // чтобы appendRow не падал, если Sheets не поднялись
   }
 })();
