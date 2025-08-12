@@ -61,7 +61,8 @@ async function initSheets() {
   await ensureSheetWithHeader('Events', ['ts','user_id','type','data']);
 
   console.log('✅ Google Sheets готова');
-
+}
+  
 async function ensureSheetWithHeader(title, header) {
   // Проверяем есть ли шапка; если листа нет — попробуем добавить.
   const headerRead = await sheetsApi.spreadsheets.values.get({
